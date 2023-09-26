@@ -1,17 +1,15 @@
 import './App.css';
-import CardComponent from './components/CardComponent';
-import FormComponent from './components/FormComponent';
-import GenerateTableComponent from './components/GenerateTableComponent';
-import Container from '@mui/material/Container';
+import { Routes, Route } from 'react-router-dom';
+import Home from './Pages/Home';
+import EditForm from './Pages/EditForm';
 
 function App() {
   return (
     <>
-      <Container maxWidth="md">
-        <FormComponent />
-        <CardComponent />
-        <GenerateTableComponent />
-      </Container>
+      <Routes>
+        <Route path="/" exact element={<Home />} />
+        <Route path="/edit/:uuid" element={<EditForm />} />
+      </Routes>
     </>
   );
 }

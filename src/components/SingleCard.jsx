@@ -10,6 +10,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { FormState } from '../Context/FormProvider';
+import { Link } from 'react-router-dom';
 
 const SingleCard = ({ card }) => {
   const { cards, setCards } = FormState();
@@ -72,29 +73,30 @@ const SingleCard = ({ card }) => {
   //   });
 
   //   setTempCard(currentCard1);
-  //   console.log('Update', tempCard);
   // };
 
-  const firstLetter = card.firstName.slice(0, 1);
+  // const firstLetter = card === 'undefined' ? null : card?.firstName.slice(0, 1);
 
   return (
     <Card sx={{ maxWidth: 345, mb: 3 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {firstLetter}
+            {/* {firstLetter} */}
           </Avatar>
         }
         action={
           <>
-            <Tooltip title="Edit" arrow>
-              <IconButton
-                aria-label="edit"
-                // onClick={() => handleEdit(card.uuid)}
-              >
-                <CreateIcon />
-              </IconButton>
-            </Tooltip>
+            <Link to={`/edit/${card.uuid}`}>
+              <Tooltip title="Edit" arrow>
+                <IconButton
+                  aria-label="edit"
+                  // onClick={() => handleEdit(card.uuid)}
+                >
+                  <CreateIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
             <Tooltip title="Delete" arrow>
               <IconButton
                 aria-label="delete"

@@ -14,10 +14,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import { Button } from '@mui/material';
 import { FormState } from '../Context/FormProvider';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
+import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 // import dayjs from 'dayjs';
 
 const FormComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const [open, setOpen] = useState(true);
 
   const {
     userInfo,
@@ -51,6 +58,18 @@ const FormComponent = () => {
     event.preventDefault();
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
   // handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,10 +96,27 @@ const FormComponent = () => {
       // <Stack sx={{ width: '100%' }} spacing={2}>
       //   <Alert severity="error">Please fill all the fields</Alert>;
       // </Stack>;
-      alert('Please fill all the fields');
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          Please fill all the fields
+        </Alert>
+      </Snackbar>;
+      // <Stack sx={{ width: '100%' }} spacing={2}>
+      //   <Alert severity="error">
+      //     <AlertTitle>Error</AlertTitle>
+      //     Please fill all the fields
+      //   </Alert>
+      // </Stack>;
+      // alert('Please fill all the fields');
     } else {
       if (password !== confirmPassword) {
-        alert('Password Does not match');
+        <Stack sx={{ width: '100%' }} spacing={2}>
+          <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            Incorrect Password
+          </Alert>
+        </Stack>;
+        // alert('Password Does not match');
       } else {
         const allValues = {
           ...userInfo,
@@ -139,8 +175,6 @@ const FormComponent = () => {
     //       return card;
     //     })
     //   );
-
-    //   console.log('THIS', currentCard1);
     // }
   };
   useEffect(() => {
@@ -151,7 +185,7 @@ const FormComponent = () => {
   const handleUserChange = (name) => (event) => {
     const value =
       name === 'dob'
-        ? event.$D + (event.$M + 1) + event.$Y
+        ? event.$Y + (event.$M + 1) + event.$D
         : event.target.value;
     setUserInfo({ ...userInfo, [name]: value });
   };
@@ -278,7 +312,7 @@ const FormComponent = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateField
               label="DOB"
-              format="YYYY-MM-DD"
+              format="DD-MM-YYYY"
               value={dob}
               onChange={handleUserChange('dob')}
             />
