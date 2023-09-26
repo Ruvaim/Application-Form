@@ -11,20 +11,20 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateField } from '@mui/x-date-pickers/DateField';
 import { Button } from '@mui/material';
 import { FormState } from '../Context/FormProvider';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Stack from '@mui/material/Stack';
-import MuiAlert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
+import { DatePicker } from '@mui/x-date-pickers';
+// import Alert from '@mui/material/Alert';
+// import Stack from '@mui/material/Stack';
+// import Snackbar from '@mui/material/Snackbar';
 // import dayjs from 'dayjs';
 
 const FormComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  const [open, setOpen] = useState(true);
+  // const [err, setErr] = useState(false);
+  // const [errMsg, setErrMsg] = useState(null);
 
   const {
     userInfo,
@@ -58,17 +58,20 @@ const FormComponent = () => {
     event.preventDefault();
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  // const handleOpen = () => {
+  //   setOpen(true);
+  // };
 
-    setOpen(false);
-  };
+  // const handleClose = (event, reason) => {
+  //   event.preventDefault();
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+  //   setErr(false);
+  //   setErrMsg(null);
 
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+  //   setOpen(false);
+  // };
 
   // handle submit
   const handleSubmit = (e) => {
@@ -76,8 +79,6 @@ const FormComponent = () => {
 
     if (
       firstName === '' ||
-      middleName === '' ||
-      lastName === '' ||
       email === '' ||
       password === '' ||
       confirmPassword === '' ||
@@ -96,27 +97,14 @@ const FormComponent = () => {
       // <Stack sx={{ width: '100%' }} spacing={2}>
       //   <Alert severity="error">Please fill all the fields</Alert>;
       // </Stack>;
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error">
-          Please fill all the fields
-        </Alert>
-      </Snackbar>;
-      // <Stack sx={{ width: '100%' }} spacing={2}>
-      //   <Alert severity="error">
-      //     <AlertTitle>Error</AlertTitle>
-      //     Please fill all the fields
-      //   </Alert>
-      // </Stack>;
-      // alert('Please fill all the fields');
+      // console.log('ERROR');
+      alert('Please fill all the fields');
+      // setErrMsg('Please fill all the fields');
+      // setErr(true);
+      // console.log(err);
     } else {
       if (password !== confirmPassword) {
-        <Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert severity="error">
-            <AlertTitle>Error</AlertTitle>
-            Incorrect Password
-          </Alert>
-        </Stack>;
-        // alert('Password Does not match');
+        alert('Password Does not match');
       } else {
         const allValues = {
           ...userInfo,
@@ -154,28 +142,6 @@ const FormComponent = () => {
         });
       }
     }
-    // else {
-    //   if (password !== confirmPassword) {
-    //     alert('Password Does not match');
-    //   }
-    //   const currentCard1 = cards.find((c) => c.uuid === updatingElemId);
-
-    //   const allValues = {
-    //     ...userInfo,
-    //     ...collegeInfo,
-    //     ...workInfo,
-    //     uuid: uniqid(),
-    //   };
-    //   // currentCard1.forEach((myCard) => handleUserChange(myCard.firstName));
-    //   setCards(
-    //     cards.map((card) => {
-    //       if (card.uuid === updatingElemId) {
-    //         localStorage.setItem('allCards', JSON.stringify([...cards]));
-    //       }
-    //       return card;
-    //     })
-    //   );
-    // }
   };
   useEffect(() => {
     localStorage.setItem('allCards', JSON.stringify([...cards]));
@@ -208,7 +174,19 @@ const FormComponent = () => {
 
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', mb: 3 }} component="form">
-      <form autoComplete="off">
+      {/* {err && (
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          open={open}
+          autoHideDuration={3000} // Set the duration for which the alert will be displayed (in milliseconds)
+          onClose={handleClose}
+          message="sdljj"
+        />
+      )} */}
+      <form autoComplete="off" sx={{ margin: 'auto' }}>
         <h1>{`Please Share Your Details`}</h1>
         {/* First Name */}
         <FormControl required fullWidth sx={{ m: 1 }}>
@@ -310,9 +288,14 @@ const FormComponent = () => {
         {/* DOB */}
         <FormControl fullWidth sx={{ m: 1 }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateField
+            {/* <DateField
               label="DOB"
               format="DD-MM-YYYY"
+              value={dob}
+              onChange={handleUserChange('dob')}
+            /> */}
+            <DatePicker
+              label="Date of birth"
               value={dob}
               onChange={handleUserChange('dob')}
             />

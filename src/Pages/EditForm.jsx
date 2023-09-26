@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import uniqid from 'uniqid';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -12,25 +11,14 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateField } from '@mui/x-date-pickers/DateField';
 import { Button, Container } from '@mui/material';
 import { FormState } from '../Context/FormProvider';
+import { DatePicker } from '@mui/x-date-pickers';
 
 const EditForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const {
-    userInfo,
-    setUserInfo,
-    collegeInfo,
-    setCollegeInfo,
-    workInfo,
-    setWorkInfo,
-    cards,
-    setCards,
-    generateTableToggle,
-    setGenerateTableToggle,
-  } = FormState();
+  const { cards, setCards } = FormState();
 
   const navigate = useNavigate();
 
@@ -61,7 +49,7 @@ const EditForm = () => {
     setEmailTemp(email);
     setPasswordTemp(password);
     setConfirmPasswordTemp(confirmPassword);
-    // setDobTemp(dob);
+    setDobTemp(dob);
     setIdTemp(id);
     setClgNameTemp(clgName);
     setUniversityNameTemp(universityName);
@@ -192,8 +180,6 @@ const EditForm = () => {
     };
     if (
       firstNameTemp === '' ||
-      middleNameTemp === '' ||
-      lastNameTemp === '' ||
       emailTemp === '' ||
       passwordTemp === '' ||
       confirmPasswordTemp === '' ||
@@ -358,9 +344,14 @@ const EditForm = () => {
             {/* DOB */}
             <FormControl fullWidth sx={{ m: 1 }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateField
+                {/* <DateField
                   label="DOB"
                   format="DD-MM-YYYY"
+                  value={dobTemp}
+                  onChange={(e) => handleDob(e)}
+                /> */}
+                <DatePicker
+                  label="Date of birth"
                   value={dobTemp}
                   onChange={(e) => handleDob(e)}
                 />
