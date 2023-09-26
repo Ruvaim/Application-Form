@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import EditForm from './Pages/EditForm';
 import TestForm from './components/TestForm';
+import MyForm from './components/MyForm';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <Route path="/" exact element={<Home />} />
         <Route path="/edit/:uuid" element={<EditForm />} />
       </Routes> */}
-      <TestForm />
+      {/* <TestForm /> */}
+      <MyForm />
     </>
   );
 }
