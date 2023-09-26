@@ -36,12 +36,8 @@ const FormProvider = ({ children }) => {
     workDetail: '',
     description: '',
   });
-  const [oldDob, setOldDob] = useState('');
   const [cards, setCards] = useState(getAllCards());
-  const [isUpdating, setIsUpdating] = useState(false);
   const [generateTableToggle, setGenerateTableToggle] = useState(false);
-  const [updatingElemId, setUpdatingElemId] = useState(null);
-  const [currentCard, setCurrentCard] = useState({});
 
   return (
     <FormContext.Provider
@@ -54,14 +50,6 @@ const FormProvider = ({ children }) => {
         setWorkInfo,
         cards,
         setCards,
-        oldDob,
-        setOldDob,
-        isUpdating,
-        setIsUpdating,
-        updatingElemId,
-        setUpdatingElemId,
-        currentCard,
-        setCurrentCard,
         generateTableToggle,
         setGenerateTableToggle,
       }}
