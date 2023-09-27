@@ -31,7 +31,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const GenerateTableComponent = () => {
-  // const { cards, generateTableToggle } = FormState();
   const { tempCards, generateTableToggle } = TempFormState();
 
   return (

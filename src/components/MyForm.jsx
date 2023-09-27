@@ -413,6 +413,8 @@ const MyForm = () => {
         <Button type="submit" variant="contained" color="primary" fullWidth>
           Submit
         </Button>
+
+        {/* Error Alert if password does not match */}
         <Snackbar
           open={passwordMismatch}
           autoHideDuration={3000}

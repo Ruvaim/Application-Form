@@ -62,7 +62,7 @@ const TempSingleCard = ({ card }) => {
         </Typography>
         <Typography variant="body2" color="text.primary">
           <b>Work Details:</b> Working at {card.companyName} located in{' '}
-          {card.companyLocation} at the position of {card.workDetail}
+          {card.companyLocation} as an {card.workDetail}
         </Typography>
         <Typography variant="body2" color="text.primary">
           <b>Description: </b> {card.description}

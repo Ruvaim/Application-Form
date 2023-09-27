@@ -83,24 +83,10 @@ const CardComponent = () => {
   const { tempCards } = TempFormState();
   return (
     <>
-      <Grid
-        container
-        spacing={2}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
+      <Grid container spacing={2}>
         {tempCards &&
           tempCards.map((card) => (
-            <Grid
-              item
-              md={4}
-              sm={6}
-              xs={12}
-              key={card.uuid}
-              justifyContent="center"
-              alignItems="center"
-            >
+            <Grid item md={4} sm={6} xs={12} key={card.uuid}>
               <TempSingleCard card={card} />
             </Grid>
           ))}
