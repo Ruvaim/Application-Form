@@ -84,7 +84,7 @@ export const TempEditForm = ({ preloadedValues }) => {
             <TextField
               label="Middle Name"
               {...field}
-              sx={{ m: 1, minWidth: { sm: '100%', md: '47%' } }}
+              sx={{ m: 1, minWidth: { xs: '100%', md: '47%' } }}
             />
           )}
         />
@@ -97,7 +97,7 @@ export const TempEditForm = ({ preloadedValues }) => {
             <TextField
               label="Last Name"
               {...field}
-              sx={{ m: 1, minWidth: { sm: '100%', md: '47%' } }}
+              sx={{ m: 1, minWidth: { xs: '100%', md: '47%' } }}
             />
           )}
         />
@@ -417,8 +417,20 @@ export const TempEditForm = ({ preloadedValues }) => {
           open={passwordMismatch}
           autoHideDuration={3000}
           onClose={() => setPasswordMismatch(false)}
+          sx={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'start',
+            margin: -3,
+          }}
         >
-          <Alert severity="error" onClose={() => setPasswordMismatch(false)}>
+          <Alert
+            severity="error"
+            variant="filled"
+            onClose={() => setPasswordMismatch(false)}
+          >
             Passwords do not match.
           </Alert>
         </Snackbar>

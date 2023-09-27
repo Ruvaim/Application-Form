@@ -28,6 +28,9 @@ const MyForm = () => {
     control,
     register,
     formState: { errors },
+    reset,
+    formState,
+    formState: { isSubmitSuccessful },
   } = useForm();
 
   const generateTable = () => {
@@ -42,8 +45,13 @@ const MyForm = () => {
     }
     const allValues = { ...data, uuid: uniqid() };
     setTempCards([...tempCards, allValues]);
-    data = '';
+    data = {};
   };
+  useEffect(() => {
+    if (formState.isSubmitSuccessful && !passwordMismatch) {
+      reset();
+    }
+  }, [formState, reset]);
 
   useEffect(() => {
     localStorage.setItem('allTempCards', JSON.stringify([...tempCards]));
@@ -419,8 +427,20 @@ const MyForm = () => {
           open={passwordMismatch}
           autoHideDuration={3000}
           onClose={() => setPasswordMismatch(false)}
+          sx={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'start',
+            margin: -3,
+          }}
         >
-          <Alert severity="error" onClose={() => setPasswordMismatch(false)}>
+          <Alert
+            severity="error"
+            variant="filled"
+            onClose={() => setPasswordMismatch(false)}
+          >
             Passwords do not match.
           </Alert>
         </Snackbar>
