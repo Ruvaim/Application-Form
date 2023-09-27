@@ -395,7 +395,14 @@ const MyForm = () => {
           defaultValue=""
           rules={{ required: 'Description is required' }}
           render={({ field }) => (
-            <TextField fullWidth label="Description" {...field} sx={{ m: 1 }} />
+            <TextField
+              fullWidth
+              multiline
+              rows={3}
+              label="Description"
+              {...field}
+              sx={{ m: 1 }}
+            />
           )}
         />
         {errors.description && (
