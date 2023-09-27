@@ -14,9 +14,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Button, Container } from '@mui/material';
 import { FormState } from '../Context/FormProvider';
 import { DatePicker } from '@mui/x-date-pickers';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 const EditForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [includeAllFields, setIncludeAllFields] = useState(false);
 
   const { cards, setCards } = FormState();
 
@@ -195,13 +199,10 @@ const EditForm = () => {
       workDetailTemp === '' ||
       descriptionTemp === ''
     ) {
-      // <Stack sx={{ width: '100%' }} spacing={2}>
-      //   <Alert severity="error">Please fill all the fields</Alert>;
-      // </Stack>;
-      alert('Please fill all the fields');
+      setIncludeAllFields(true);
     } else {
       if (passwordTemp !== confirmPasswordTemp) {
-        alert('Password Does not match');
+        setPasswordMismatch(true);
       } else {
         const curCard = cards.find((c) => c.uuid === uuid);
 
@@ -233,15 +234,32 @@ const EditForm = () => {
         );
         navigate('/');
       }
+      localStorage.setItem('allCards', JSON.stringify([...cards]));
     }
-
-    localStorage.setItem('allCards', JSON.stringify([...cards]));
   };
 
   return (
     <>
       <Container maxWidth="md">
         <Box sx={{ display: 'flex', flexWrap: 'wrap', mb: 3 }} component="form">
+          <Snackbar
+            open={passwordMismatch}
+            autoHideDuration={3000}
+            onClose={() => setPasswordMismatch(false)}
+          >
+            <Alert severity="error" onClose={() => setPasswordMismatch(false)}>
+              Passwords do not match.
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={includeAllFields}
+            autoHideDuration={3000}
+            onClose={() => setIncludeAllFields(false)}
+          >
+            <Alert severity="error" onClose={() => setIncludeAllFields(false)}>
+              Please Include All Fields.
+            </Alert>
+          </Snackbar>
           <form autoComplete="off">
             <h1>{`Please Update Your Details`}</h1>
             {/* First Name */}

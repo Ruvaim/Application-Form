@@ -1,14 +1,14 @@
 import React from 'react';
-import FormComponent from '../components/FormComponent';
 import CardComponent from '../components/CardComponent';
 import GenerateTableComponent from '../components/GenerateTableComponent';
 import { Container } from '@mui/material';
+import MyForm from '../components/MyForm';
 
 const Home = () => {
   return (
     <>
       <Container maxWidth="md">
-        <FormComponent />
+        <MyForm />
         <CardComponent />
         <GenerateTableComponent />
       </Container>

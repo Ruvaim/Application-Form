@@ -14,13 +14,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Button } from '@mui/material';
 import { FormState } from '../Context/FormProvider';
 import { DatePicker } from '@mui/x-date-pickers';
-// import Alert from '@mui/material/Alert';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 // import Stack from '@mui/material/Stack';
-// import Snackbar from '@mui/material/Snackbar';
 // import dayjs from 'dayjs';
 
 const FormComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
   // const [open, setOpen] = useState(false);
 
   // const [err, setErr] = useState(false);
@@ -104,7 +105,8 @@ const FormComponent = () => {
       // console.log(err);
     } else {
       if (password !== confirmPassword) {
-        alert('Password Does not match');
+        // alert('Password Does not match');
+        setPasswordMismatch(true);
       } else {
         const allValues = {
           ...userInfo,
@@ -441,6 +443,15 @@ const FormComponent = () => {
           {/* {`${isUpdating ? 'Update' : 'Submit'}`} */}
           Submit
         </Button>
+        <Snackbar
+          open={passwordMismatch}
+          autoHideDuration={3000}
+          onClose={() => setPasswordMismatch(false)}
+        >
+          <Alert severity="error" onClose={() => setPasswordMismatch(false)}>
+            Passwords do not match.
+          </Alert>
+        </Snackbar>
         {!generateTableToggle && (
           <Button
             variant="contained"

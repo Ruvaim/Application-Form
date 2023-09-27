@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormState } from '../Context/FormProvider';
-import SingleCard from './SingleCard';
 import Grid from '@mui/material/Grid';
+import { TempFormState } from '../Context/TempFormProvider';
+import TempSingleCard from './TempSingleCard';
 
 const CardComponent = () => {
   // const cards = [
@@ -67,14 +67,41 @@ const CardComponent = () => {
   //   },
   // ];
 
-  const { cards } = FormState();
+  // const { cards } = FormState();
+  // return (
+  //   <>
+  //     <Grid container spacing={2}>
+  //       {cards &&
+  //         cards.map((card, i) => (
+  //           <Grid item md={4} sm={6} xs={12} key={i}>
+  //             <SingleCard card={card} />
+  //           </Grid>
+  //         ))}
+  //     </Grid>
+  //   </>
+  // );
+  const { tempCards } = TempFormState();
   return (
     <>
-      <Grid container spacing={2}>
-        {cards &&
-          cards.map((card, i) => (
-            <Grid item md={4} sm={6} xs={12} key={i}>
-              <SingleCard card={card} />
+      <Grid
+        container
+        spacing={2}
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        {tempCards &&
+          tempCards.map((card) => (
+            <Grid
+              item
+              md={4}
+              sm={6}
+              xs={12}
+              key={card.uuid}
+              justifyContent="center"
+              alignItems="center"
+            >
+              <TempSingleCard card={card} />
             </Grid>
           ))}
       </Grid>

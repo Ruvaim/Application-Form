@@ -1,68 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import uniqid from 'uniqid';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { TempFormState } from '../Context/TempFormProvider';
+import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-const MyForm = () => {
+export const TempEditForm = ({ preloadedValues }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [passwordMismatch, setPasswordMismatch] = useState(false);
 
-  const {
-    tempCards,
-    setTempCards,
-    generateTableToggle,
-    setGenerateTableToggle,
-  } = TempFormState();
+  const { tempCards, setTempCards } = TempFormState();
+  const { uuid } = useParams();
+
+  const navigate = useNavigate();
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const {
     handleSubmit,
     control,
     register,
     formState: { errors },
-  } = useForm();
-
-  const generateTable = () => {
-    setGenerateTableToggle(true);
-  };
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  } = useForm({
+    defaultValues: preloadedValues,
+  });
 
   const onSubmit = (data) => {
     if (data.password !== data.confirmPassword) {
       return setPasswordMismatch(true);
     }
-    const allValues = { ...data, uuid: uniqid() };
-    setTempCards([...tempCards, allValues]);
-    data = '';
-  };
 
-  useEffect(() => {
+    setTempCards(
+      tempCards.map((card) => {
+        if (card.uuid === uuid) {
+          return data;
+        }
+        return card;
+      })
+    );
     localStorage.setItem('allTempCards', JSON.stringify([...tempCards]));
-  }, [tempCards]);
+    navigate('/');
+  };
 
   return (
     <Box p={2} maxWidth={600} mx="auto">
       <Typography variant="h4" gutterBottom>
-        Share Your Details
+        Update Your Details
       </Typography>
       <Typography variant="h6" gutterBottom>
         Your Info
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="firstName"
           control={control}
-          defaultValue=""
           inputRef={register}
+          name="firstName"
+          // defaultValue={preloadedValues?.firstName}
           rules={{ required: 'First Name is required' }}
           render={({ field }) => (
             <TextField fullWidth label="First Name" {...field} sx={{ m: 1 }} />
@@ -78,13 +78,13 @@ const MyForm = () => {
         <Controller
           name="middleName"
           control={control}
-          defaultValue=""
+          //   // defaultValue=""
           sx={{ m: 1 }}
           render={({ field }) => (
             <TextField
               label="Middle Name"
               {...field}
-              sx={{ m: 1, minWidth: { xs: '100%', md: '47%' } }}
+              sx={{ m: 1, minWidth: { sm: '100%', md: '47%' } }}
             />
           )}
         />
@@ -92,12 +92,12 @@ const MyForm = () => {
         <Controller
           name="lastName"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           render={({ field }) => (
             <TextField
               label="Last Name"
               {...field}
-              sx={{ m: 1, minWidth: { xs: '100%', md: '47%' } }}
+              sx={{ m: 1, minWidth: { sm: '100%', md: '47%' } }}
             />
           )}
         />
@@ -106,7 +106,7 @@ const MyForm = () => {
         <Controller
           name="email"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Email is required' }}
           sx={{ m: 1 }}
           render={({ field }) => (
@@ -129,7 +129,7 @@ const MyForm = () => {
         <Controller
           name="password"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Password is required' }}
           render={({ field }) => (
             <TextField
@@ -161,7 +161,7 @@ const MyForm = () => {
         <Controller
           name="confirmPassword"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Confirm Password is required' }}
           render={({ field }) => (
             <TextField
@@ -193,7 +193,7 @@ const MyForm = () => {
         <Controller
           name="dob"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Date of birth is required' }}
           render={({ field }) => (
             <TextField
@@ -219,7 +219,7 @@ const MyForm = () => {
         <Controller
           name="id"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'ID is required' }}
           render={({ field }) => (
             <TextField fullWidth label="ID" {...field} sx={{ m: 1 }} />
@@ -235,7 +235,7 @@ const MyForm = () => {
         <Controller
           name="collegeName"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'College Name is required' }}
           render={({ field }) => (
             <TextField
@@ -256,7 +256,7 @@ const MyForm = () => {
         <Controller
           name="universityName"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'University Name is required' }}
           render={({ field }) => (
             <TextField
@@ -277,7 +277,7 @@ const MyForm = () => {
         <Controller
           name="collegeLocation"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'College Location is required' }}
           render={({ field }) => (
             <TextField
@@ -298,7 +298,7 @@ const MyForm = () => {
         <Controller
           name="courseName"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Course Name is required' }}
           render={({ field }) => (
             <TextField fullWidth label="Course Name" {...field} sx={{ m: 1 }} />
@@ -314,7 +314,7 @@ const MyForm = () => {
         <Controller
           name="grade"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Grade is required' }}
           render={({ field }) => (
             <TextField fullWidth label="Grade" {...field} sx={{ m: 1 }} />
@@ -334,7 +334,7 @@ const MyForm = () => {
         <Controller
           name="companyName"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Company Name is required' }}
           render={({ field }) => (
             <TextField
@@ -355,7 +355,7 @@ const MyForm = () => {
         <Controller
           name="companyLocation"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Company Location is required' }}
           render={({ field }) => (
             <TextField
@@ -376,7 +376,7 @@ const MyForm = () => {
         <Controller
           name="workDetail"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Work Detail is required' }}
           render={({ field }) => (
             <TextField fullWidth label="Work Detail" {...field} sx={{ m: 1 }} />
@@ -392,7 +392,7 @@ const MyForm = () => {
         <Controller
           name="description"
           control={control}
-          defaultValue=""
+          // defaultValue=""
           rules={{ required: 'Description is required' }}
           render={({ field }) => (
             <TextField fullWidth label="Description" {...field} sx={{ m: 1 }} />
@@ -404,7 +404,7 @@ const MyForm = () => {
           </div>
         )}
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          Submit
+          Update
         </Button>
         <Snackbar
           open={passwordMismatch}
@@ -415,20 +415,9 @@ const MyForm = () => {
             Passwords do not match.
           </Alert>
         </Snackbar>
-        {!generateTableToggle && (
-          <Button
-            variant="contained"
-            size="large"
-            color="error"
-            sx={{ mt: 3, width: '100%' }}
-            onClick={generateTable}
-          >
-            Generate Table
-          </Button>
-        )}
       </form>
     </Box>
   );
 };
 
-export default MyForm;
+// export default TempEditForm;

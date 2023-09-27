@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { FormState } from '../Context/FormProvider';
+import { TempFormState } from '../Context/TempFormProvider';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,11 +31,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const GenerateTableComponent = () => {
-  const { cards, generateTableToggle } = FormState();
+  // const { cards, generateTableToggle } = FormState();
+  const { tempCards, generateTableToggle } = TempFormState();
 
   return (
     <>
-      {cards && generateTableToggle && (
+      {tempCards && generateTableToggle && (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
             <TableHead>
@@ -47,7 +49,7 @@ const GenerateTableComponent = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {cards.map((card) => (
+              {tempCards.map((card) => (
                 <StyledTableRow key={card.uuid}>
                   <StyledTableCell component="th" scope="row">
                     {card.id}

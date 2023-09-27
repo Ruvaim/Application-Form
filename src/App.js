@@ -1,19 +1,15 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
-import EditForm from './Pages/EditForm';
-import TestForm from './components/TestForm';
-import MyForm from './components/MyForm';
+import LoadEditForm from './components/LoadEditForm';
 
 function App() {
   return (
     <>
-      {/* <Routes>
+      <Routes>
         <Route path="/" exact element={<Home />} />
-        <Route path="/edit/:uuid" element={<EditForm />} />
-      </Routes> */}
-      {/* <TestForm /> */}
-      <MyForm />
+        <Route path="/edit/:uuid" element={<LoadEditForm />} />
+      </Routes>
     </>
   );
 }
